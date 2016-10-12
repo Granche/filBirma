@@ -1,0 +1,10 @@
+{
+  "name": "filBirma",
+  "version": "0.0.1",
+  "dependencies": {
+    "express": "*",
+    "cookie-parser": "*",
+    "body-parser": "*",
+    "mongoose": "*"
+  }
+}
