@@ -7,7 +7,7 @@ var bilSchema = mongoose.Schema({
   registration: String,
   model: String,
   damage: String,
-  owner: String,
+  owner: Object,
 
 })
 
