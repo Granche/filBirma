@@ -5,6 +5,11 @@
     "express": "*",
     "cookie-parser": "*",
     "body-parser": "*",
-    "mongoose": "*"
+    "mongoose": "*",
+    "serve-favicon": "*",
+    "gulp": "*",
+    "gulp-less": "*",
+    "gulp-clean-css": "*",
+    "express-session": "*"
   }
 }

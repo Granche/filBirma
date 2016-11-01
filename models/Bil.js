@@ -1,6 +1,4 @@
 var mongoose = require('mongoose');
-//mongoose.connect('mongodb://localhost/test');
-var db = mongoose.connection;
 
 var bilSchema = mongoose.Schema({
   
@@ -8,8 +6,7 @@ var bilSchema = mongoose.Schema({
   model: String,
   damage: String,
   owner: Object,
-
+   
 })
 
-var Bil = db.model('Bil', bilSchema);
-module.exports = Bil;
+module.exports = m.mongoose.model('Bil', bilSchema)
