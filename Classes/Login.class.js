@@ -39,7 +39,7 @@ module.exports = class Login {
     var aUser = new this.model({uName: params.uName, passW: params.passW});
 
     aUser.save(function(err){
-      if(err){console.log(err)}
+      if (err) { me.logErr(err, res) return };
         res.json({"OK":" User har blivit sparad"})
     })
     
