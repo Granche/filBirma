@@ -4,6 +4,5 @@ module.exports = function() {
   g.classes = {};
   settings.toLoad.forEach(function(c) {
     g.classes[c] = require(m.path.join(settings.baseDir, c+'.class.js'));
-    //console.log(m.path.join(settings.baseDir, c+'.class.js')
   });
 };

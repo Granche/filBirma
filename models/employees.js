@@ -1,13 +1,12 @@
-var mongoose = require('mongoose');
+var mongoose= require('mongoose');
 
-var employeeSchema = mongoose.Schema({
+var employeesSchema = mongoose.Schema({
 
-  name: String,
-  dateOfBirth: Number,
-  adress: String,
-  number: Number,
-  hasWorkedOn: Object
+	SSN: {type: String, required: true},
+	name: {type: String, required: true},
+	vacation: {type: mongoose.Schema.Types.ObjectId, ref: 'vacations'},
 
-});
 
-var Employee = mongoose.model('Employee', employeeSchema);
+})
+
+module.exports= m.mongoose.model('employees', employeesSchema)

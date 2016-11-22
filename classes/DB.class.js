@@ -1,10 +1,11 @@
+'use strict';
 // our database connection
 var connection;
 
 module.exports = class DB {
   constructor() {
     // do not connect to mongodb multiple times!
-    if (connection) { return; }
+    if (connection) { return; }
 
     // save our settings to this
     this.settings = g.settings.DB;
@@ -26,6 +27,7 @@ module.exports = class DB {
     // log successful connection
     connection.once('open', () => {
       console.log("Mongoose connected to "+this.settings.db);
+      m.dummyGen();
     });
   }
 
@@ -37,8 +39,8 @@ module.exports = class DB {
   loadModels() {
     // find all files in the model directory,
     var modelFiles = m.fs.readdirSync(this.settings.modelDir);
-
-    console.log("Model-Files: ", modelFiles);
+    
+    console.log("mf", modelFiles);
 
     // and require each of them
     modelFiles.forEach(function(fileName) {
@@ -46,6 +48,6 @@ module.exports = class DB {
     }, this);
 
     // check if the model loaded
-     //console.log(m.mongoose.model('Bil'));
+    // console.log(m.mongoose.model('Message'));
   }
 };

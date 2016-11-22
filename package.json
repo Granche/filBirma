@@ -1,15 +1,18 @@
 {
-  "name": "filBirma",
+  "name": "SUW15dev",
   "version": "0.0.1",
   "dependencies": {
-    "express": "*",
-    "cookie-parser": "*",
     "body-parser": "*",
-    "mongoose": "*",
+    "cookie-parser": "*",
+    "debug": "*",
+    "express": "*",
+    "express-session": "*",
     "serve-favicon": "*",
+    "compression": "*",
     "gulp": "*",
     "gulp-less": "*",
     "gulp-clean-css": "*",
-    "express-session": "*"
+    "mongoose": "*",
+    "mysql": "*"
   }
 }

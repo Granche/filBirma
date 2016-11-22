@@ -1,21 +1,20 @@
-// constructs g.settings object
 module.exports = function() {
   var appRoot = m.path.normalize(__dirname +'/');
   
   g.settings = {
     appRoot: appRoot,
     classLoader: {
-      baseDir: m.path.join(appRoot,'/classes/'),
+      baseDir: m.path.join(appRoot,'classes/'),
       toLoad: [
-        'Server',
         'DB',
-        'LessWatch'
+        'REST',
+        'Server',
+        'LessWatch',
+        'Login'
       ]
     },
     Server: {
       endpoint: '/',
-      secondEndpoint: '/bilar/:id?',
-      bilModel: 'Bil',
       webroot: 'public',
       indexFile: 'index.html',
       port: 3000
@@ -28,13 +27,19 @@ module.exports = function() {
         lessInput: [
           './less/all.less'
         ],
-        cssOutput: './public/css'
-      } 
+        cssOutput: './www/css'
+      }
     },
     DB: {
       host: '127.0.0.1',
-      db: 'filBirma',
-      modelDir: m.path.join(appRoot, 'models/')
+      db: 'wreckstad',
+      modelDir: m.path.join(appRoot,'models/')
+    },
+    REST: {
+      route: '/rest/:model/:modelID?'
+    },
+    Login: {
+      route: '/login'
     }
   };
 };
