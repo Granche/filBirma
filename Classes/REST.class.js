@@ -5,14 +5,14 @@ module.exports = class REST {
     this.settings = g.settings.REST;
     this.DB = new g.classes.DB();
     this.app = express;
-    this.SQL = new g.classes.SQL;
     this.router();
+    this.logErr = require("../logErr.js")
   }
 
   router() {
     var me = this;
     this.app.all(this.settings.route, function(req, res) {
-    
+      
       var model = me.DB.getModel(req.params.model);
       if (!me[req.method] || !model) {
         res.sendStatus(404);
@@ -33,7 +33,7 @@ module.exports = class REST {
       toSave = new model(params);
 
     toSave.save(function (err, result) {
-      if (err) { me.error(err, res); return; }
+      if (err) { me.logErr(err, res) return };
       res.json(result);
     });
   }
@@ -42,20 +42,24 @@ module.exports = class REST {
 
     if (!params.modelID) {
       model.find(function (err, result) {
+        if (err) { me.logErr(err, res) return };
 
       }).populate("damages").populate("customer")
         .populate("hasWorked").populate("sparePartsUsed")
-        .populate("vacation").exec(function (err, resss) {
-          res.json(resss)
+        .populate("vacation").exec(function (err, results) {
+          if (err) { me.logErr(err, res) return };
+          res.json(results)
         })
     }
     else {
       model.findById(params.modelID, function (err, result) {
+        if (err) { me.logErr(err, res) return };
 
       }).populate("damages").populate("customer")
         .populate("hasWorked").populate("sparePartsUsed")
-        .populate("vacation").exec(function (err, ressss) {
-          res.json(ressss)
+        .populate("vacation").exec(function (err, results) {
+          if (err) { me.logErr(err, res) return };
+          res.json(results)
         })
     }
   }
@@ -66,7 +70,7 @@ module.exports = class REST {
     }
 
     model.findByIdAndUpdate(params.modelID, params, { new: true }, function (err, result) {
-      if (err) { console.log(err) }
+      if (err) { me.logErr(err, res) return };
       res.json(result);
     });
   }
@@ -77,7 +81,7 @@ module.exports = class REST {
     }
 
     model.findByIdAndRemove(params.modelID, function (err, result) {
-      if (err) { console.log(err) }
+      if (err) { me.logErr(err, res) return };
       res.json({ 'ok': 'raderat' });
     });
   }

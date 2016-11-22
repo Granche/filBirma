@@ -19,6 +19,17 @@ module.exports = function() {
       indexFile: 'index.html',
       port: 3000
     },
+    REST: {
+      route: '/rest/:model/:modelID?'
+    },
+    Login: {
+      route: '/login'
+    },
+    DB: {
+      host: '127.0.0.1',
+      db: 'wreckstad',
+      modelDir: m.path.join(appRoot,'models/')
+    },
     LessWatch: {
       paths: {
         watchDirs: [
@@ -29,17 +40,6 @@ module.exports = function() {
         ],
         cssOutput: './www/css'
       }
-    },
-    DB: {
-      host: '127.0.0.1',
-      db: 'wreckstad',
-      modelDir: m.path.join(appRoot,'models/')
-    },
-    REST: {
-      route: '/rest/:model/:modelID?'
-    },
-    Login: {
-      route: '/login'
     }
   };
 };
