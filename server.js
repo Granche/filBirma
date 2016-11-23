@@ -23,6 +23,7 @@ g = {};
   "./models/spares",
   "./models/vacations",
   "./dummyGen",
+  "./logErr",
   "./settingsConstr",
   "./classLoader"
 ].forEach(function(x){

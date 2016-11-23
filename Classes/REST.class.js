@@ -6,7 +6,6 @@ module.exports = class REST {
     this.DB = new g.classes.DB();
     this.app = express;
     this.router();
-    this.logErr = require("../logErr.js")
   }
 
   router() {
@@ -33,32 +32,31 @@ module.exports = class REST {
       toSave = new model(params);
 
     toSave.save(function (err, result) {
-      if (err) { me.logErr(err, res) return };
+      if (err) { m.logErr(err, res) };
       res.json(result);
     });
   }
 
   GET(model, params, req, res) {
-
     if (!params.modelID) {
       model.find(function (err, result) {
-        if (err) { me.logErr(err, res) return };
+        if (err) { m.logErr(err, res) };
 
       }).populate("damages").populate("customer")
         .populate("hasWorked").populate("sparePartsUsed")
         .populate("vacation").exec(function (err, results) {
-          if (err) { me.logErr(err, res) return };
+          if (err) { m.logErr(err, res) };
           res.json(results)
         })
     }
     else {
       model.findById(params.modelID, function (err, result) {
-        if (err) { me.logErr(err, res) return };
+        if (err) { m.logErr(err, res) };
 
       }).populate("damages").populate("customer")
         .populate("hasWorked").populate("sparePartsUsed")
         .populate("vacation").exec(function (err, results) {
-          if (err) { me.logErr(err, res) return };
+          if (err) { m.logErr(err, res) };
           res.json(results)
         })
     }
@@ -70,7 +68,7 @@ module.exports = class REST {
     }
 
     model.findByIdAndUpdate(params.modelID, params, { new: true }, function (err, result) {
-      if (err) { me.logErr(err, res) return };
+      if (err) { m.logErr(err, res) };
       res.json(result);
     });
   }
@@ -81,7 +79,7 @@ module.exports = class REST {
     }
 
     model.findByIdAndRemove(params.modelID, function (err, result) {
-      if (err) { me.logErr(err, res) return };
+      if (err) { m.logErr(err, res) };
       res.json({ 'ok': 'raderat' });
     });
   }
