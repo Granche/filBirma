@@ -6,11 +6,15 @@ module.exports = function() {
   descArr = ["Regular Service","Regular Service","Regular Service","Regular Service","Broken headlight","Engine failure","Tire change","Collision damage","Collision damage","Broken windows","Filter change","Oil change","broken fuel-gauge","Needs new stereo","Needs windows tinted","Brake failure"," Needs wheel adjustment","Won't start","Wont stop","Needs painting on rear right-side","Regular Service","Regular Service","Regular Service","Regular Service","Broken headlight","Engine failure","Tire change","Collision damage","Collision damage","Broken windows","Filter change","Oil change","broken fuel-gauge","Needs new stereo","Needs windows tinted","Brake failure"," Needs wheel adjustment","Won't start","Wont stop","Needs painting on rear right-side"];
   nameArr = "Rafaela Borrego-Josefa Wiggins-Marivel Downer-Abraham Inskeep-Shelia Moad-Consuela Christner-Erich Mattei-Theda Huffstetler-Sherrill Defalco-Cinderella Dempsey-Ulysses Moton-Nathalie Harker-Leda Womac-Jackqueline Mcneil-Kasandra Knisely-Brianne Cantrelle-Chadwick Carrasco-Bettie Thomasson-Almeda Hilchey-Jenelle Chausse-Inger Canizales-Cassondra Treese-Herminia Blunk-Weldon Avants-Rupert Gard-Garnett Como-Alease Delmonte-Lue Vrba-Nereida Shadwick-Xuan Nygren-Manie Meadors-Almeta Peel-Benito Toms-Sonja Dy-Terina Younger-Juliana Bodine-Joey Keifer-Irina Grimaldi-Glennie Zimmermann-Alejandrina Cessna-Letitia Chancy-Tony South-Kieth Morissette-Berry Rappaport-Teresa Admire-Penney Heldt-Dayle Zamor-Xavier Nembhard-Dexter Browner-Diana Weintraub".split("-")
   numberArr = "(995) 605-1549-(981) 652-5696-(563) 146-7238-(948) 282-2787-(780) 892-7822-(789) 868-3333-(542) 853-3342-(474) 101-1910-(179) 823-6679-(100) 227-8412-(729) 722-0811-(368) 947-5456-(458) 315-9824-(682) 424-0051-(377) 974-0592-(548) 708-4299-(289) 915-5991-(769) 854-1567-(138) 743-2271-(371) 198-5115-(776) 763-1869-(513) 986-3565".split("-");
-  regArr = ["ABC 123","DEF 345","GHI 456","JKL 567","MNO 678","PQR 789"," STU 890","VXY 012"," XYZ 123","KPG 856","HAM 041","AKF 222","YUA 621","AYH 999","GRA 666","NIT 333","FLY 696","TIO 337","HAL 239","OLA 753", "FHA 248", "QWF 999", "YKA 815", "EPA 555"];
+  regArr = ["ABC 123","DEF 345","GHI 456","JKL 567","MNO 678","PQR 789","STU 890","VXY 012","XYZ 123","KPG 856","HAM 041","AKF 222","YUA 621","AYH 999","GRA 666","NIT 333","FLY 696","TIO 337","HAL 239","OLA 753", "FHA 248", "QWF 999", "YKA 815", "EPA 555"];
   damageStatus= ["awaiting", "ongoing", "finished"];
-  usedRegs = [];
 
   for(var i=0; i<9; i++) {
+    var r1 = Math.floor(Math.random()*);
+    var r2 = Math.floor(Math.random()*-7);
+    var r3 = Math.floor(Math.random()*-22);
+    var bookedDate = new Date(new Date().getTime()+(r1*24*60*60*1000));
+    var accidentDate = new Date(new Date().getTime()+(r3*24*60*60*1000));
 
     var aVacation = new m.modelsvacations({
       from: new Date("<2016-05-17>"), 
@@ -18,7 +22,7 @@ module.exports = function() {
 
     })
     aVacation.save(function(err){
-      if(err){console.log(err)}
+      if(err){m.logErr(err)}
 
 
       var aEmployee = new m.modelsemployees({
@@ -27,7 +31,7 @@ module.exports = function() {
         vacation: aVacation._id
       })
       aEmployee.save(function(err){
-        if(err){console.log(err)}
+        if(err){m.logErr(err)}
         
 
         var aCustomer = new m.modelscustomers({
@@ -35,7 +39,7 @@ module.exports = function() {
           number: numberArr[Math.round(Math.random()*40)],
         })
         aCustomer.save(function(err){
-          if(err) {console.log(err)}
+          if(err) {m.logErr(err)}
           
 
           var aPart = new m.modelsspares({
@@ -45,36 +49,32 @@ module.exports = function() {
             price: priceArr[Math.round(Math.random()*96)]
           })
           aPart.save(function(err){
-            if(err) {console.log(err)}
+            if(err) {m.logErr(err)}
             
-
             var aDamage = new m.modelsdamages({
               description: descArr[Math.round(Math.random()*38)],
+              accidentDate: accidentDate,
               hasWorked: aEmployee._id,
               hasWorkedForMinutes: Math.round(Math.random()*60),
               sparePartsUsed: aPart._id,
               status: damageStatus[Math.round(Math.random()*2)]
             }) 
             aDamage.save(function(err){
-              if(err) {console.log(err)}
-               
+              if(err) {m.logErr(err)}
+
 
               var enBil = new m.modelscars({
+                registration: regArr[0],
                 model: modelArr[Math.round(Math.random()*38)],
                 damages: aDamage._id,
                 customer: aCustomer._id,
+                inDate: Date.now(),
+                bookedDate: bookedDate
               });
-              var aReg = regArr[Math.round(Math.random()*22)];
-              for(var i=0; i<usedRegs.length; i++) {
-                if(aReg == usedRegs[i]){
-                  aReg = regArr[Math.round(Math.random()*22)];
-                }
-                continue    
-              }
-              enBil.registration = aReg;
-              usedRegs.push(aReg);
+              regArr.shift();
+              
               enBil.save(function(err){
-                if(err) {console.log(err)}
+                if(err) {m.logErr(err)}
               }); 
             });
           });

@@ -38,28 +38,19 @@ module.exports = class REST {
   }
 
   GET(model, params, req, res) {
-    if (!params.modelID) {
-      model.find(function (err, result) {
-        if (err) { m.logErr(err, res) };
+    var me = this,
+        func = params.modelID ? 'findById' : 'find',
+        q = params.modelID ? params.modelID : {};
 
-      }).populate("damages").populate("customer")
-        .populate("hasWorked").populate("sparePartsUsed")
-        .populate("vacation").exec(function (err, results) {
-          if (err) { m.logErr(err, res) };
-          res.json(results)
-        })
-    }
-    else {
-      model.findById(params.modelID, function (err, result) {
-        if (err) { m.logErr(err, res) };
-
-      }).populate("damages").populate("customer")
-        .populate("hasWorked").populate("sparePartsUsed")
-        .populate("vacation").exec(function (err, results) {
-          if (err) { m.logErr(err, res) };
-          res.json(results)
-        })
-    }
+    model[func](q, function(err, result) {
+      if (err) { m.logErr(err) }
+      
+    }).populate("damages").populate("customer")
+    .populate("hasWorked").populate("sparePartsUsed")
+    .populate("vacation").sort("-registration").exec(function (err, results) {
+      if (err) { m.logErr(err, res) };
+      res.json(results)
+    })
   }
 
   PUT(model, params, req, res) {

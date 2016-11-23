@@ -10,4 +10,4 @@ var spareSchema = mongoose.Schema({
 
 })
 
-module.exports= m.mongoose.model('spareParts', spareSchema)
+module.exports= m.mongoose.model('spares', spareSchema)
